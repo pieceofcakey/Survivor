@@ -1,5 +1,8 @@
 import * as Phaser from "phaser";
 
+import PreLoader from "./scenes/PreLoader";
+import MainScene from "./scenes/MainScene";
+
 const config = {
   type: Phaser.AUTO,
   parent: "game-container",
@@ -17,7 +20,7 @@ const config = {
       debug: true,
     },
   },
-  scene: [],
+  scene: [PreLoader, MainScene],
 };
 
 export default config;
