@@ -2,6 +2,7 @@ import * as Phaser from "phaser";
 
 import PreLoader from "./scenes/PreLoader";
 import MainScene from "./scenes/MainScene";
+import GameOverScene from "./scenes/GameOverScene";
 
 const config = {
   type: Phaser.AUTO,
@@ -20,7 +21,7 @@ const config = {
       debug: true,
     },
   },
-  scene: [PreLoader, MainScene],
+  scene: [PreLoader, MainScene, GameOverScene],
 };
 
 export default config;
