@@ -27,6 +27,7 @@ module.exports = {
     "no-unused-vars": "warn",
     "no-param-reassign": 0,
     "no-await-in-loop": 0,
+    "no-case-declarations": 0,
     "no-console": "warn",
   },
 };
