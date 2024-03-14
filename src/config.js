@@ -2,6 +2,7 @@ import * as Phaser from "phaser";
 
 import PreLoader from "./scenes/PreLoader";
 import MainScene from "./scenes/MainScene";
+import PlayingScene from "./scenes/PlayingScene";
 import GameOverScene from "./scenes/GameOverScene";
 
 const config = {
@@ -21,7 +22,7 @@ const config = {
       debug: true,
     },
   },
-  scene: [PreLoader, MainScene, GameOverScene],
+  scene: [PreLoader, MainScene, PlayingScene, GameOverScene],
 };
 
 export default config;
