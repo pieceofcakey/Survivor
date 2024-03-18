@@ -49,7 +49,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.m_canBeAttacked = false;
     this.alpha = 0.5;
     this.scene.time.addEvent({
-      delay: 1000,
+      delay: 500,
       callback: () => {
         this.alpha = 1;
         this.m_canBeAttacked = true;

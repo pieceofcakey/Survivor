@@ -6,7 +6,7 @@ export default class Button extends Phaser.GameObjects.Text {
 
     this.setOrigin(0.5)
       .setPadding(10)
-      .setStyle({ backgroundColor: "#027bce", fontSize: 20 })
+      .setStyle({ backgroundColor: "#677ced", fontSize: 20 })
       .setInteractive({ useHandCursor: true })
       .on("pointerover", () => this.setStyle({ fill: "#000000" }))
       .on("pointerout", () => this.setStyle({ fill: "#ffffff" }))
