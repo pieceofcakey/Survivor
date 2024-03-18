@@ -9,6 +9,6 @@ export function getRandomPosition(x, y) {
   return [randomX, randomY];
 }
 
-export function clamp(value, lo, hi) {
-  return Math.min(Math.max(value, lo), hi);
+export function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
 }
