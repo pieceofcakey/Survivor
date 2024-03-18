@@ -1,5 +1,6 @@
 import * as Phaser from "phaser";
 import config from "../config";
+import { clamp } from "../utils/math";
 
 export default class ExpBar extends Phaser.GameObjects.Graphics {
   constructor(scene, maxExp) {
@@ -21,6 +22,17 @@ export default class ExpBar extends Phaser.GameObjects.Graphics {
     scene.add.existing(this);
   }
 
+  increase(amount) {
+    this.m_currentExp = clamp(this.m_currentExp + amount, 0, this.m_maxExp);
+
+    this.draw();
+  }
+
+  reset() {
+    this.m_currentExp = 0;
+    this.draw();
+  }
+
   draw() {
     this.clear();
 
@@ -35,7 +47,7 @@ export default class ExpBar extends Phaser.GameObjects.Graphics {
       this.HEIGHT - 2 * this.BORDER,
     );
 
-    this.fillStyle(0x3665d5);
+    this.fillStyle(0x677ced);
 
     const exp = Math.floor(
       ((config.width - 2 * this.BORDER) / this.m_maxExp) * this.m_currentExp,
