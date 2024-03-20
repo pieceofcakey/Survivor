@@ -6,16 +6,16 @@ import { loseGame } from "../utils/sceneManager";
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(scene) {
     super(scene, config.width / 2, config.height / 2, "player");
+
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
     this.scale = 1.3;
-    this.setDepth(20);
-    this.setBodySize(40, 50);
     this.m_moving = false;
-
     this.m_canBeAttacked = true;
     this.m_hpBar = new HpBar(scene, this, 100);
+    this.setDepth(20);
+    this.setBodySize(40, 50);
   }
 
   move(vector) {
@@ -47,11 +47,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
   getCooldown() {
     this.m_canBeAttacked = false;
-    this.alpha = 0.5;
+    this.tint = 0xdb4455;
     this.scene.time.addEvent({
       delay: 500,
       callback: () => {
-        this.alpha = 1;
+        this.tint = 0xffffff;
         this.m_canBeAttacked = true;
       },
       callbackScope: this,
