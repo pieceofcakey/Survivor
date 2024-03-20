@@ -29,8 +29,16 @@ const ITEM_PROPERTY = {
 
 export default class ExpUp extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, mob) {
-    const x = mob.x;
-    const y = mob.y + 30;
+    let x = 0;
+    let y = 0;
+
+    if (mob.texture.key === "mobBoss") {
+      x = mob.x;
+      y = mob.y + 70;
+    } else {
+      x = mob.x;
+      y = mob.y + 30;
+    }
 
     super(scene, x, y, "expUp");
     scene.add.existing(this);
