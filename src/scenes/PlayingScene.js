@@ -5,7 +5,7 @@ import Player from "../characters/Player";
 import Mob from "../characters/Mob";
 
 import { setBackground } from "../utils/backgroundManager";
-import { addMobEvent } from "../utils/mobManager";
+import { addMobEvent, removeAllMobEvent } from "../utils/mobManager";
 import { addAttackEvent } from "../utils/attackManager";
 import { createTime } from "../utils/time";
 import { pause } from "../utils/pauseManager";
@@ -27,7 +27,7 @@ export default class PlayingScene extends Phaser.Scene {
     this.m_mobs.add(new Mob(this, 0, 0, "mob1", "mob1Run", 10, 0.9));
     this.m_mobEvents = [];
 
-    addMobEvent(this, 100, "mob1", "mob1Run", 10, 0.9);
+    addMobEvent(this, 300, "mob1", "mob1Run", 10, 0.9);
 
     createTime(this);
 
@@ -45,7 +45,28 @@ export default class PlayingScene extends Phaser.Scene {
     this.physics.add.overlap(
       this.m_player,
       this.m_mobs,
-      () => this.m_player.hitByMob(10),
+      (player, mob) => {
+        switch (mob.texture.key) {
+          case "mob1":
+            this.m_player.hitByMob(5);
+            break;
+          case "mob2":
+            this.m_player.hitByMob(10);
+            break;
+          case "mob3":
+            this.m_player.hitByMob(20);
+            break;
+          case "mob4":
+            this.m_player.hitByMob(25);
+            break;
+          case "mob5":
+            this.m_player.hitByMob(33);
+            break;
+          case "mobBoss":
+            this.m_player.hitByMob(50);
+            break;
+        }
+      },
       null,
       this,
     );
@@ -89,6 +110,41 @@ export default class PlayingScene extends Phaser.Scene {
       },
       this,
     );
+
+    this.time.addEvent({
+      delay: 10000,
+      callback: () => {
+        switch (this.m_secondElapsed) {
+          case 20:
+            removeAllMobEvent(this);
+            addMobEvent(this, 300, "mob2", "mob2Run", 20, 0.8);
+
+            break;
+          case 40:
+            removeAllMobEvent(this);
+            addMobEvent(this, 300, "mob3", "mob3Run", 30, 0.7);
+
+            break;
+          case 60:
+            removeAllMobEvent(this);
+            addMobEvent(this, 300, "mob4", "mob4Run", 40, 0.6);
+
+            break;
+          case 80:
+            removeAllMobEvent(this);
+            addMobEvent(this, 300, "mob5", "mob5Run", 50, 0.5);
+
+            break;
+          case 100:
+            removeAllMobEvent(this);
+            addMobEvent(this, 1000, "mobBoss", "mobBossRun", 60, 0.5);
+
+            break;
+        }
+      },
+      callbackScope: this,
+      loop: true,
+    });
   }
 
   update() {
