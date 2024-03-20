@@ -34,7 +34,9 @@ export function addMobEvent(
   scene.m_mobEvents.push(timer);
 }
 
-export function removeOldestMobEvent(scene) {
-  scene.m_mobEvents[0].remove();
-  scene.m_mobEvents.shift();
+export function removeAllMobEvent(scene) {
+  while (scene.m_mobEvents.length > 0) {
+    scene.m_mobEvents.at(-1).remove();
+    scene.m_mobEvents.pop();
+  }
 }
