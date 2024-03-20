@@ -10,6 +10,11 @@ import explosionImg from "/assets/spritesheets/explosion.png";
 import playerImg from "/assets/spritesheets/player.png";
 import expUpImg from "/assets/spritesheets/expUp.png";
 import mobImg1 from "/assets/spritesheets/mob1.png";
+import mobImg2 from "/assets/spritesheets/mob2.png";
+import mobImg3 from "/assets/spritesheets/mob3.png";
+import mobImg4 from "/assets/spritesheets/mob4.png";
+import mobImg5 from "/assets/spritesheets/mob5.png";
+import mobImgBoss from "/assets/spritesheets/mobBoss.png";
 
 export default class PreLoader extends Phaser.Scene {
   constructor() {
@@ -24,10 +29,32 @@ export default class PreLoader extends Phaser.Scene {
       frameWidth: 80,
       frameHeight: 80,
     });
+
     this.load.spritesheet("mob1", mobImg1, {
       frameWidth: 64,
       frameHeight: 64,
     });
+    this.load.spritesheet("mob2", mobImg2, {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
+    this.load.spritesheet("mob3", mobImg3, {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
+    this.load.spritesheet("mob4", mobImg4, {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
+    this.load.spritesheet("mob5", mobImg5, {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
+    this.load.spritesheet("mobBoss", mobImgBoss, {
+      frameWidth: 160,
+      frameHeight: 128,
+    });
+
     this.load.spritesheet("explosion", explosionImg, {
       frameWidth: 32,
       frameHeight: 32,
@@ -63,6 +90,36 @@ export default class PreLoader extends Phaser.Scene {
     this.anims.create({
       key: "mob1Run",
       frames: this.anims.generateFrameNumbers("mob1"),
+      frameRate: 12,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "mob2Run",
+      frames: this.anims.generateFrameNumbers("mob2"),
+      frameRate: 12,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "mob3Run",
+      frames: this.anims.generateFrameNumbers("mob3"),
+      frameRate: 12,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "mob4Run",
+      frames: this.anims.generateFrameNumbers("mob4"),
+      frameRate: 12,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "mob5Run",
+      frames: this.anims.generateFrameNumbers("mob5"),
+      frameRate: 12,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "mobBossRun",
+      frames: this.anims.generateFrameNumbers("mobBoss"),
       frameRate: 12,
       repeat: -1,
     });

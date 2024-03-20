@@ -10,27 +10,35 @@ export default class Mob extends Phaser.Physics.Arcade.Sprite {
 
     this.play(animKey);
     this.setDepth(10);
-    this.scale = 2;
 
-    this.m_speed = 50;
+    this.scale = 2;
+    this.m_speed = 60;
     this.m_hp = initHp;
     this.m_dropRate = dropRate;
 
     this.m_canBeAttacked = true;
 
     if (texture === "mob1") {
-      this.setBodySize(24, 32, false);
+      this.setBodySize(24, 32);
       this.setOffset(20, 32);
     } else if (texture === "mob2") {
       this.setBodySize(24, 32);
+      this.setOffset(20, 32);
     } else if (texture === "mob3") {
       this.setBodySize(24, 32);
+      this.setOffset(20, 32);
     } else if (texture === "mob4") {
       this.setBodySize(24, 32);
+      this.setOffset(20, 32);
     } else if (texture === "mob5") {
       this.setBodySize(24, 32);
+      this.setOffset(20, 32);
     } else if (texture === "mobBoss") {
-      this.setBodySize(40, 64);
+      this.scale = 3;
+      this.m_speed = 50;
+
+      this.setBodySize(44, 50);
+      this.setOffset(60, 64);
     }
 
     this.m_events = [];
@@ -60,6 +68,7 @@ export default class Mob extends Phaser.Physics.Arcade.Sprite {
     if (!this.m_canBeAttacked) {
       return;
     }
+
     this.m_hp -= damage;
 
     this.displayHit();
@@ -67,11 +76,11 @@ export default class Mob extends Phaser.Physics.Arcade.Sprite {
   }
 
   displayHit() {
-    this.alpha = 0.5;
+    this.tint = 0xdb4455;
     this.scene.time.addEvent({
-      delay: 1000,
+      delay: 200,
       callback: () => {
-        this.alpha = 1;
+        this.tint = 0xffffff;
       },
       loop: false,
     });
