@@ -23,7 +23,9 @@ export default class GameOverScene extends Phaser.Scene {
       config.height / 2 + 150,
       "Try Again?",
       this,
-      () => this.scene.start("playGame"),
+      () => {
+        this.scene.start("playGame");
+      },
     );
 
     new Button(
@@ -31,7 +33,9 @@ export default class GameOverScene extends Phaser.Scene {
       config.height / 2 + 150,
       "Go To Main",
       this,
-      () => this.scene.start("mainScene"),
+      () => {
+        this.scene.start("mainScene");
+      },
     );
   }
 }

@@ -28,7 +28,9 @@ export default class MainScene extends Phaser.Scene {
       config.height / 2 + 150,
       "Start Game!",
       this,
-      () => this.scene.start("playGame"),
+      () => {
+        this.scene.start("playGame");
+      },
     );
   }
 }
