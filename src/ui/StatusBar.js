@@ -43,7 +43,7 @@ export default class StatusBar extends Phaser.GameObjects.Graphics {
     this.m_level += 1;
     this.m_levelLabel.text = `LVL ${this.m_level.toString().padStart(3, "0")}`;
 
-    this.scene.m_expBar.m_maxExp *= 1.3;
+    this.scene.m_expBar.m_maxExp *= 1.5;
     this.scene.m_expBar.reset();
   }
 }
