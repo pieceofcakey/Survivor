@@ -9,6 +9,7 @@ import arrowImg from "/assets/images/arrow.png";
 import explosionImg from "/assets/spritesheets/explosion.png";
 import playerImg from "/assets/spritesheets/player.png";
 import expUpImg from "/assets/spritesheets/expUp.png";
+import itemsImg from "/assets/spritesheets/items.png";
 import mobImg1 from "/assets/spritesheets/mob1.png";
 import mobImg2 from "/assets/spritesheets/mob2.png";
 import mobImg3 from "/assets/spritesheets/mob3.png";
@@ -60,6 +61,10 @@ export default class PreLoader extends Phaser.Scene {
       frameHeight: 32,
     });
     this.load.spritesheet("expUp", expUpImg, {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
+    this.load.spritesheet("items", itemsImg, {
       frameWidth: 16,
       frameHeight: 16,
     });
@@ -182,6 +187,43 @@ export default class PreLoader extends Phaser.Scene {
       frames: this.anims.generateFrameNumbers("expUp", {
         start: 5,
         end: 5,
+      }),
+      frameRate: 20,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "magnet",
+      frames: this.anims.generateFrameNumbers("items", {
+        start: 0,
+        end: 0,
+      }),
+      frameRate: 20,
+      repeat: 0,
+    });
+    this.anims.create({
+      key: "freeze",
+      frames: this.anims.generateFrameNumbers("items", {
+        start: 1,
+        end: 1,
+      }),
+      frameRate: 20,
+      repeat: 0,
+    });
+    this.anims.create({
+      key: "potion",
+      frames: this.anims.generateFrameNumbers("items", {
+        start: 2,
+        end: 2,
+      }),
+      frameRate: 20,
+      repeat: 0,
+    });
+    this.anims.create({
+      key: "allkill",
+      frames: this.anims.generateFrameNumbers("items", {
+        start: 3,
+        end: 3,
       }),
       frameRate: 20,
       repeat: 0,

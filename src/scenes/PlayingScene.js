@@ -24,14 +24,14 @@ export default class PlayingScene extends Phaser.Scene {
     this.cameras.main.startFollow(this.m_player);
 
     this.m_mobs = this.physics.add.group();
-    this.m_mobs.add(new Mob(this, 0, 0, "mob1", "mob1Run", 10, 0.9));
+    this.m_mobs.add(new Mob(this, 0, 0, "mob1", "mob1Run", 10, 0.9, 0.1));
     this.m_mobEvents = [];
 
-    addMobEvent(this, 300, "mob1", "mob1Run", 10, 0.9);
+    addMobEvent(this, 300, "mob1", "mob1Run", 10, 0.9, 0.1);
 
     createTime(this);
 
-    this.m_expBar = new ExpBar(this, 50);
+    this.m_expBar = new ExpBar(this, 100);
     this.m_statusBar = new StatusBar(this);
 
     this.m_weaponDynamic = this.add.group();
@@ -101,6 +101,34 @@ export default class PlayingScene extends Phaser.Scene {
       this,
     );
 
+    this.m_items = this.physics.add.group();
+
+    this.physics.add.overlap(
+      this.m_player,
+      this.m_items,
+      (player, items) => {
+        switch (items.m_itemName) {
+          case "magnet":
+            items.m_itemFunction(this.m_expUps.getChildren(), player);
+            break;
+          case "freeze":
+            items.m_itemFunction(this.m_mobs.getChildren());
+            break;
+          case "potion":
+            items.m_itemFunction(player);
+            break;
+          case "allkill":
+            items.m_itemFunction(this.m_mobs.getChildren());
+            break;
+        }
+
+        items.disableBody(true, true);
+        items.destroy();
+      },
+      null,
+      this,
+    );
+
     this.m_cursorKeys = this.input.keyboard.createCursorKeys();
 
     this.input.keyboard.on(
@@ -117,27 +145,37 @@ export default class PlayingScene extends Phaser.Scene {
         switch (this.m_secondElapsed) {
           case 20:
             removeAllMobEvent(this);
-            addMobEvent(this, 300, "mob2", "mob2Run", 20, 0.8);
+            addMobEvent(this, 300, "mob2", "mob2Run", 20, 0.8, 0.1);
 
             break;
           case 40:
             removeAllMobEvent(this);
-            addMobEvent(this, 300, "mob3", "mob3Run", 30, 0.7);
+            addMobEvent(this, 300, "mob3", "mob3Run", 30, 0.7, 0.1);
 
             break;
           case 60:
             removeAllMobEvent(this);
-            addMobEvent(this, 300, "mob4", "mob4Run", 40, 0.6);
+            addMobEvent(this, 300, "mob4", "mob4Run", 40, 0.6, 0.1);
 
             break;
           case 80:
             removeAllMobEvent(this);
-            addMobEvent(this, 300, "mob5", "mob5Run", 50, 0.5);
+            addMobEvent(this, 300, "mob5", "mob5Run", 50, 0.5, 0.1);
 
             break;
           case 100:
             removeAllMobEvent(this);
-            addMobEvent(this, 1000, "mobBoss", "mobBossRun", 60, 0.5);
+            addMobEvent(this, 300, "mobBoss", "mobBossRun", 60, 0.5, 0.1);
+
+            break;
+          case 120:
+            removeAllMobEvent(this);
+            addMobEvent(this, 100, "mob1", "mob1Run", 10, 0.9, 0.1);
+            addMobEvent(this, 100, "mob2", "mob2Run", 20, 0.8, 0.1);
+            addMobEvent(this, 100, "mob3", "mob3Run", 30, 0.7, 0.1);
+            addMobEvent(this, 100, "mob4", "mob4Run", 40, 0.6, 0.1);
+            addMobEvent(this, 100, "mob5", "mob5Run", 50, 0.5, 0.1);
+            addMobEvent(this, 100, "mobBoss", "mobBossRun", 60, 0.5, 0.1);
 
             break;
         }
@@ -208,6 +246,10 @@ export default class PlayingScene extends Phaser.Scene {
 
     if (this.m_expBar.m_currentExp >= this.m_expBar.m_maxExp) {
       pause(this, "levelup");
+    }
+
+    if (expUp.m_expEvents.length > 0) {
+      this.time.removeEvent(expUp.m_expEvents);
     }
   }
 

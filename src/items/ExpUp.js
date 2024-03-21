@@ -1,6 +1,6 @@
-import Phaser from "phaser";
+import * as Phaser from "phaser";
 
-const ITEM_PROPERTY = {
+const EXP_PROPERTY = {
   mob1: {
     exp: 10,
     color: "green",
@@ -44,11 +44,13 @@ export default class ExpUp extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
     scene.physics.world.enableBody(this);
 
-    this.m_exp = ITEM_PROPERTY[mob.texture.key].exp;
-    this.play(ITEM_PROPERTY[mob.texture.key].color);
+    this.m_exp = EXP_PROPERTY[mob.texture.key].exp;
+    this.play(EXP_PROPERTY[mob.texture.key].color);
 
     this.scale = 1.5;
     this.setDepth(7);
     this.setBodySize(20, 20);
+
+    this.m_expEvents = [];
   }
 }

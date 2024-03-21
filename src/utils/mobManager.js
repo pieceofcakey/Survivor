@@ -7,7 +7,8 @@ export function addMobEvent(
   mobTexture,
   mobAnim,
   mobHp,
-  mobDropRate,
+  mobExpDropRate,
+  mobItemDropRate,
 ) {
   const timer = scene.time.addEvent({
     delay: repeatGap,
@@ -24,7 +25,8 @@ export function addMobEvent(
           mobTexture,
           mobAnim,
           mobHp,
-          mobDropRate,
+          mobExpDropRate,
+          mobItemDropRate,
         ),
       );
     },
