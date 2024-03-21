@@ -1,21 +1,55 @@
 import * as Phaser from "phaser";
 import config from "../config";
 import Button from "../ui/Button";
+import { setBackground } from "../utils/backgroundManager";
+import { getTimeString } from "../utils/time";
 
 export default class GameOverScene extends Phaser.Scene {
   constructor() {
     super("gameOverScene");
   }
 
+  init(data) {
+    this.m_killCount = data.killCount;
+    this.m_level = data.level;
+    this.m_secondElapsed = data.secondElapsed;
+  }
+
   create() {
-    this.add
-      .graphics()
-      .fillStyle(0x000000)
-      .fillRect(0, 0, config.width, config.height)
-      .setScrollFactor(0);
+    setBackground(this, "background1");
 
     this.add
       .bitmapText(config.width / 2, 150, "pixelFont", "GAME OVER...", 100)
+      .setOrigin(0.5);
+
+    this.add
+      .bitmapText(
+        config.width / 2,
+        340,
+        "pixelFont",
+        `Survived For ${getTimeString(this.m_secondElapsed)}`,
+        50,
+      )
+      .setOrigin(0.5);
+
+    this.add
+      .bitmapText(
+        config.width / 2,
+        410,
+        "pixelFont",
+        `Killed ${this.m_killCount} Mobs`,
+        50,
+      )
+      .setOrigin(0.5);
+
+    this.add
+      .bitmapText(
+        config.width / 2,
+        480,
+        "pixelFont",
+        `Died At Level ${this.m_level}`,
+        50,
+      )
       .setOrigin(0.5);
 
     new Button(
