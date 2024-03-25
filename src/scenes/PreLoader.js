@@ -4,7 +4,10 @@ import fontPng from "/assets/font/font.png";
 import fontXml from "/assets/font/font.xml?url";
 
 import background from "/assets/images/background.png";
+
 import arrowImg from "/assets/images/arrow.png";
+import shieldImg from "/assets/images/shield.png";
+import swordImg from "/assets/images/sword.png";
 
 import explosionImg from "/assets/spritesheets/explosion.png";
 import playerImg from "/assets/spritesheets/player.png";
@@ -16,6 +19,9 @@ import mobImg3 from "/assets/spritesheets/mob3.png";
 import mobImg4 from "/assets/spritesheets/mob4.png";
 import mobImg5 from "/assets/spritesheets/mob5.png";
 import mobImgBoss from "/assets/spritesheets/mobBoss.png";
+import whipImg from "/assets/spritesheets/whip.png";
+import lightningImg from "/assets/spritesheets/lightning.png";
+import fireballImg from "/assets/spritesheets/fireball.png";
 
 export default class PreLoader extends Phaser.Scene {
   constructor() {
@@ -25,6 +31,8 @@ export default class PreLoader extends Phaser.Scene {
   preload() {
     this.load.image("background1", background);
     this.load.image("arrow", arrowImg);
+    this.load.image("shield", shieldImg);
+    this.load.image("sword", swordImg);
 
     this.load.spritesheet("player", playerImg, {
       frameWidth: 80,
@@ -54,6 +62,18 @@ export default class PreLoader extends Phaser.Scene {
     this.load.spritesheet("mobBoss", mobImgBoss, {
       frameWidth: 160,
       frameHeight: 128,
+    });
+    this.load.spritesheet("whip", whipImg, {
+      frameWidth: 65,
+      frameHeight: 27,
+    });
+    this.load.spritesheet("lightning", lightningImg, {
+      frameWidth: 72,
+      frameHeight: 72,
+    });
+    this.load.spritesheet("fireball", fireballImg, {
+      frameWidth: 512,
+      frameHeight: 384,
     });
 
     this.load.spritesheet("explosion", explosionImg, {
@@ -90,6 +110,27 @@ export default class PreLoader extends Phaser.Scene {
       }),
       frameRate: 1,
       repeat: 0,
+    });
+
+    this.anims.create({
+      key: "whip_anim",
+      frames: this.anims.generateFrameNumbers("whip"),
+      frameRate: 20,
+      repeat: 0,
+      hideOnComplete: true,
+    });
+    this.anims.create({
+      key: "lightning_anim",
+      frames: this.anims.generateFrameNumbers("lightning"),
+      frameRate: 40,
+      repeat: 0,
+      hideOnComplete: true,
+    });
+    this.anims.create({
+      key: "fireball_anim",
+      frames: this.anims.generateFrameNumbers("fireball"),
+      frameRate: 40,
+      repeat: -1,
     });
 
     this.anims.create({
