@@ -12,6 +12,7 @@ import { pause } from "../utils/pauseManager";
 
 import ExpBar from "../ui/ExpBar";
 import StatusBar from "../ui/StatusBar";
+import Shield from "../effects/Shield";
 
 export default class PlayingScene extends Phaser.Scene {
   constructor() {
@@ -24,10 +25,10 @@ export default class PlayingScene extends Phaser.Scene {
     this.cameras.main.startFollow(this.m_player);
 
     this.m_mobs = this.physics.add.group();
-    this.m_mobs.add(new Mob(this, 0, 0, "mob1", "mob1Run", 10, 0.9, 0.1));
+    this.m_mobs.add(new Mob(this, 0, 0, "mob1", "mob1Run", 10, 0.9, 0.01));
     this.m_mobEvents = [];
 
-    addMobEvent(this, 300, "mob1", "mob1Run", 10, 0.9, 0.1);
+    addMobEvent(this, 100, "mob1", "mob1Run", 10, 0.9, 0.01);
 
     createTime(this);
 
@@ -36,9 +37,18 @@ export default class PlayingScene extends Phaser.Scene {
 
     this.m_weaponDynamic = this.add.group();
     this.m_weaponStatic = this.add.group();
+    this.m_weaponStaticShield = this.add.group();
     this.m_attackEvents = {};
 
-    addAttackEvent(this, "arrow", 10, 1.5, 200);
+    addAttackEvent(this, "arrow", 10, 1.5, 500);
+    addAttackEvent(this, "sword", 10, 1.8, 500);
+    addAttackEvent(this, "fireball", 20, 0.25, 1000);
+    addAttackEvent(this, "whip", 10, 3, 1000);
+    addAttackEvent(this, "lightning", 10, 1, 1000);
+    addAttackEvent(this, "shield", 10, 2);
+    new Shield(this, [this.m_player.x - 100, this.m_player.y], 10, 2);
+    new Shield(this, [this.m_player.x, this.m_player.y + 100], 10, 2);
+    new Shield(this, [this.m_player.x, this.m_player.y - 100], 10, 2);
 
     setBackground(this, "background1");
 
@@ -83,6 +93,15 @@ export default class PlayingScene extends Phaser.Scene {
 
     this.physics.add.overlap(
       this.m_weaponStatic,
+      this.m_mobs,
+      (weapon, mob) => {
+        mob.hitByStatic(weapon.m_damage);
+      },
+      null,
+      this,
+    );
+    this.physics.add.overlap(
+      this.m_weaponStaticShield,
       this.m_mobs,
       (weapon, mob) => {
         mob.hitByStatic(weapon.m_damage);
@@ -145,37 +164,37 @@ export default class PlayingScene extends Phaser.Scene {
         switch (this.m_secondElapsed) {
           case 20:
             removeAllMobEvent(this);
-            addMobEvent(this, 300, "mob2", "mob2Run", 20, 0.8, 0.1);
+            addMobEvent(this, 300, "mob2", "mob2Run", 20, 0.8, 0.01);
 
             break;
           case 40:
             removeAllMobEvent(this);
-            addMobEvent(this, 300, "mob3", "mob3Run", 30, 0.7, 0.1);
+            addMobEvent(this, 300, "mob3", "mob3Run", 30, 0.7, 0.01);
 
             break;
           case 60:
             removeAllMobEvent(this);
-            addMobEvent(this, 300, "mob4", "mob4Run", 40, 0.6, 0.1);
+            addMobEvent(this, 300, "mob4", "mob4Run", 40, 0.6, 0.01);
 
             break;
           case 80:
             removeAllMobEvent(this);
-            addMobEvent(this, 300, "mob5", "mob5Run", 50, 0.5, 0.1);
+            addMobEvent(this, 300, "mob5", "mob5Run", 50, 0.5, 0.01);
 
             break;
           case 100:
             removeAllMobEvent(this);
-            addMobEvent(this, 300, "mobBoss", "mobBossRun", 60, 0.5, 0.1);
+            addMobEvent(this, 300, "mobBoss", "mobBossRun", 60, 0.5, 0.01);
 
             break;
           case 120:
             removeAllMobEvent(this);
-            addMobEvent(this, 100, "mob1", "mob1Run", 10, 0.9, 0.1);
-            addMobEvent(this, 100, "mob2", "mob2Run", 20, 0.8, 0.1);
-            addMobEvent(this, 100, "mob3", "mob3Run", 30, 0.7, 0.1);
-            addMobEvent(this, 100, "mob4", "mob4Run", 40, 0.6, 0.1);
-            addMobEvent(this, 100, "mob5", "mob5Run", 50, 0.5, 0.1);
-            addMobEvent(this, 100, "mobBoss", "mobBossRun", 60, 0.5, 0.1);
+            addMobEvent(this, 100, "mob1", "mob1Run", 10, 0.9, 0.01);
+            addMobEvent(this, 100, "mob2", "mob2Run", 20, 0.8, 0.01);
+            addMobEvent(this, 100, "mob3", "mob3Run", 30, 0.7, 0.01);
+            addMobEvent(this, 100, "mob4", "mob4Run", 40, 0.6, 0.01);
+            addMobEvent(this, 100, "mob5", "mob5Run", 50, 0.5, 0.01);
+            addMobEvent(this, 100, "mobBoss", "mobBossRun", 60, 0.5, 0.01);
 
             break;
         }
@@ -200,6 +219,7 @@ export default class PlayingScene extends Phaser.Scene {
     );
 
     this.m_closest = closest;
+    this.m_weaponStaticShield.rotateAroundDistance(this.m_player, 0.05, 150);
   }
 
   movePlayerManager() {
@@ -237,6 +257,18 @@ export default class PlayingScene extends Phaser.Scene {
     }
 
     this.m_player.move(vector);
+
+    this.m_weaponStatic.children.each((weapon) => {
+      if (weapon.texture.key === "lightning") {
+        return;
+      }
+
+      weapon.move(vector);
+    }, this);
+
+    this.m_weaponStaticShield.children.each((weapon) => {
+      weapon.move(vector);
+    }, this);
   }
 
   pickExpUp(player, expUp) {
