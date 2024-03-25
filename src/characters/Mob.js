@@ -39,16 +39,16 @@ export default class Mob extends Phaser.Physics.Arcade.Sprite {
       this.setBodySize(24, 32);
       this.setOffset(20, 32);
     } else if (texture === "mob4") {
-      this.setBodySize(24, 32);
+      this.setBodySize(20, 32);
       this.setOffset(20, 32);
     } else if (texture === "mob5") {
-      this.setBodySize(24, 32);
+      this.setBodySize(20, 32);
       this.setOffset(20, 32);
     } else if (texture === "mobBoss") {
       this.scale = 3;
       this.m_speed = 50;
 
-      this.setBodySize(44, 50);
+      this.setBodySize(40, 50);
       this.setOffset(60, 64);
     }
 
@@ -57,7 +57,11 @@ export default class Mob extends Phaser.Physics.Arcade.Sprite {
       this.scene.time.addEvent({
         delay: 100,
         callback: () => {
-          scene.physics.moveToObject(this, scene.m_player, this.m_speed);
+          scene.physics.moveToObject(
+            this,
+            { x: scene.m_player.x, y: scene.m_player.y - 30 },
+            this.m_speed,
+          );
         },
         loop: true,
       }),
@@ -105,7 +109,7 @@ export default class Mob extends Phaser.Physics.Arcade.Sprite {
   getCoolDown() {
     this.m_canBeAttacked = false;
     this.scene.time.addEvent({
-      delay: 1000,
+      delay: 500,
       callback: () => {
         this.m_canBeAttacked = true;
       },
