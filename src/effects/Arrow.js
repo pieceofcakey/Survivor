@@ -4,7 +4,7 @@ export default class Arrow extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, startingPosition, damage, scale) {
     super(scene, startingPosition[0], startingPosition[1], "arrow");
 
-    this.SPEED = 200;
+    this.SPEED = 250;
     this.DURATION = 1500;
 
     scene.add.existing(this);
@@ -56,9 +56,5 @@ export default class Arrow extends Phaser.Physics.Arcade.Sprite {
 
     this.rotation = angleToMob + Math.PI / 2 + Math.PI / 4;
     this.body.setAngularVelocity(0);
-  }
-
-  setDamage(damage) {
-    this.m_damage = damage;
   }
 }
