@@ -16,6 +16,10 @@ const config = {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
+  fps: {
+    target: 60,
+    limit: 61,
+  },
   physics: {
     default: "arcade",
     arcade: {
