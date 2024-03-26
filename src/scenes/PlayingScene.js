@@ -39,7 +39,7 @@ export default class PlayingScene extends Phaser.Scene {
 
     createTime(this);
 
-    this.m_expBar = new ExpBar(this, 100);
+    this.m_expBar = new ExpBar(this, 50);
     this.m_statusBar = new StatusBar(this);
 
     this.m_weaponDynamic = this.add.group();
