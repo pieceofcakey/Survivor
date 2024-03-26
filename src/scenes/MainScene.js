@@ -10,7 +10,7 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create() {
-    setBackground(this, "background1");
+    setBackground(this, "main");
 
     this.add
       .bitmapText(config.width / 2, 150, "pixelFont", "SURVIVOR", 100)

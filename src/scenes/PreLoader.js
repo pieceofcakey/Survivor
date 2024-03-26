@@ -4,6 +4,7 @@ import fontPng from "/assets/font/font.png";
 import fontXml from "/assets/font/font.xml?url";
 
 import background from "/assets/images/background.png";
+import main from "/assets/images/main.png";
 
 import arrowImg from "/assets/images/arrow.png";
 import shieldImg from "/assets/images/shield.png";
@@ -30,6 +31,7 @@ export default class PreLoader extends Phaser.Scene {
 
   preload() {
     this.load.image("background1", background);
+    this.load.image("main", main);
     this.load.image("arrow", arrowImg);
     this.load.image("shield", shieldImg);
     this.load.image("sword", swordImg);
