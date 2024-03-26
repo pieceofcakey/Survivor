@@ -6,7 +6,12 @@ import Mob from "../characters/Mob";
 
 import { setBackground } from "../utils/backgroundManager";
 import { addMobEvent, removeAllMobEvent } from "../utils/mobManager";
-import { addAttackEvent } from "../utils/attackManager";
+import {
+  addAttackEvent,
+  setAttackDamage,
+  setAttackRepeatGap,
+  setAttackScale,
+} from "../utils/attackManager";
 import { createTime } from "../utils/time";
 import { pause } from "../utils/pauseManager";
 
@@ -20,6 +25,8 @@ export default class PlayingScene extends Phaser.Scene {
   }
 
   create() {
+    setBackground(this, "background1");
+
     this.m_player = new Player(this);
 
     this.cameras.main.startFollow(this.m_player);
@@ -28,7 +35,7 @@ export default class PlayingScene extends Phaser.Scene {
     this.m_mobs.add(new Mob(this, 0, 0, "mob1", "mob1Run", 10, 0.9, 0.01));
     this.m_mobEvents = [];
 
-    addMobEvent(this, 100, "mob1", "mob1Run", 10, 0.9, 0.01);
+    addMobEvent(this, 300, "mob1", "mob1Run", 10, 0.9, 0.01);
 
     createTime(this);
 
@@ -40,17 +47,9 @@ export default class PlayingScene extends Phaser.Scene {
     this.m_weaponStaticShield = this.add.group();
     this.m_attackEvents = {};
 
-    addAttackEvent(this, "arrow", 10, 1.5, 500);
-    addAttackEvent(this, "sword", 10, 1.8, 500);
-    addAttackEvent(this, "fireball", 20, 0.25, 1000);
-    addAttackEvent(this, "whip", 10, 3, 1000);
-    addAttackEvent(this, "lightning", 10, 1, 1000);
-    addAttackEvent(this, "shield", 10, 2);
-    new Shield(this, [this.m_player.x - 100, this.m_player.y], 10, 2);
-    new Shield(this, [this.m_player.x, this.m_player.y + 100], 10, 2);
-    new Shield(this, [this.m_player.x, this.m_player.y - 100], 10, 2);
+    this.m_shieldAngle = 0.05;
 
-    setBackground(this, "background1");
+    addAttackEvent(this, "arrow", 10, 1.5, 1000);
 
     this.physics.add.overlap(
       this.m_player,
@@ -219,7 +218,11 @@ export default class PlayingScene extends Phaser.Scene {
     );
 
     this.m_closest = closest;
-    this.m_weaponStaticShield.rotateAroundDistance(this.m_player, 0.05, 150);
+    this.m_weaponStaticShield.rotateAroundDistance(
+      this.m_player,
+      this.m_shieldAngle,
+      150,
+    );
   }
 
   movePlayerManager() {
@@ -287,5 +290,109 @@ export default class PlayingScene extends Phaser.Scene {
 
   afterLevelUp() {
     this.m_statusBar.gainLevel();
+
+    switch (this.m_statusBar.m_level) {
+      case 2:
+        addAttackEvent(this, "whip", 10, 1.5, 1000);
+        break;
+      case 3:
+        addAttackEvent(this, "sword", 10, 1.8, 500);
+        break;
+      case 4:
+        addAttackEvent(this, "shield", 10, 2);
+        break;
+      case 5:
+        addAttackEvent(this, "fireball", 20, 0.25, 1000);
+        break;
+      case 6:
+        addAttackEvent(this, "lightning", 10, 1, 1000);
+        break;
+      case 7:
+        setAttackRepeatGap(this, "arrow", 500);
+        break;
+      case 8:
+        setAttackScale(this, "whip", 3);
+        break;
+      case 9:
+        this.m_weaponStaticShield.clear(true, true);
+
+        addAttackEvent(this, "shield", 10, 2);
+        new Shield(this, [this.m_player.x - 100, this.m_player.y], 10, 2);
+        new Shield(this, [this.m_player.x, this.m_player.y + 100], 10, 2);
+        new Shield(this, [this.m_player.x, this.m_player.y - 100], 10, 2);
+        break;
+      case 10:
+        setAttackRepeatGap(this, "sword", 250);
+        break;
+      case 11:
+        setAttackRepeatGap(this, "fireball", 500);
+        break;
+      case 12:
+        setAttackRepeatGap(this, "lightning", 500);
+        break;
+      case 13:
+        setAttackRepeatGap(this, "arrow", 100);
+        break;
+      case 14:
+        setAttackRepeatGap(this, "whip", 500);
+        break;
+      case 15:
+        this.m_weaponStaticShield.clear(true, true);
+
+        addAttackEvent(this, "shield", 10, 2);
+        new Shield(this, [this.m_player.x - 100, this.m_player.y], 10, 2);
+        new Shield(this, [this.m_player.x, this.m_player.y + 100], 10, 2);
+        new Shield(this, [this.m_player.x, this.m_player.y - 100], 10, 2);
+        new Shield(
+          this,
+          [this.m_player.x + Math.cos(50), this.m_player.y - Math.sin(45)],
+          10,
+          2,
+        );
+        new Shield(
+          this,
+          [this.m_player.x - Math.cos(50), this.m_player.y - Math.sin(45)],
+          10,
+          2,
+        );
+        new Shield(
+          this,
+          [this.m_player.x + Math.cos(50), this.m_player.y + Math.sin(45)],
+          10,
+          2,
+        );
+        new Shield(
+          this,
+          [this.m_player.x - Math.cos(50), this.m_player.y + Math.sin(45)],
+          10,
+          2,
+        );
+        break;
+      case 16:
+        setAttackRepeatGap(this, "sword", 100);
+        break;
+      case 17:
+        addAttackEvent(this, "fireball", 20, 0.25, 500);
+        addAttackEvent(this, "fireball", 20, 0.25, 500);
+        addAttackEvent(this, "fireball", 20, 0.25, 500);
+        addAttackEvent(this, "fireball", 20, 0.25, 500);
+        break;
+      case 18:
+        addAttackEvent(this, "lightning", 10, 1, 500);
+        addAttackEvent(this, "lightning", 10, 1, 500);
+        addAttackEvent(this, "lightning", 10, 1, 500);
+        addAttackEvent(this, "lightning", 10, 1, 500);
+        break;
+      case 19:
+        this.m_shieldAngle = 0.1;
+        break;
+      case 20:
+        setAttackDamage(this, "arrow", 30);
+        setAttackDamage(this, "sword", 30);
+        setAttackDamage(this, "whip", 30);
+        break;
+      default:
+        break;
+    }
   }
 }
