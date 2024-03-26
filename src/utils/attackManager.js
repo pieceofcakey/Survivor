@@ -17,7 +17,7 @@ export function addAttackEvent(scene, attackType, damage, scale, repeatGap) {
       });
 
       scene.m_attackEvents[attackType] = {
-        timerArrow,
+        timer: timerArrow,
         damage,
         scale,
         repeatGap,
@@ -33,7 +33,7 @@ export function addAttackEvent(scene, attackType, damage, scale, repeatGap) {
         loop: true,
       });
       scene.m_attackEvents[attackType] = {
-        timerWhip,
+        timer: timerWhip,
         damage,
         scale,
         repeatGap,
@@ -61,7 +61,7 @@ export function addAttackEvent(scene, attackType, damage, scale, repeatGap) {
       });
 
       scene.m_attackEvents[attackType] = {
-        timerSword,
+        timer: timerSword,
         damage,
         scale,
         repeatGap,
@@ -78,7 +78,7 @@ export function addAttackEvent(scene, attackType, damage, scale, repeatGap) {
       });
 
       scene.m_attackEvents[attackType] = {
-        timerFireball,
+        timer: timerFireball,
         damage,
         scale,
         repeatGap,
@@ -95,7 +95,7 @@ export function addAttackEvent(scene, attackType, damage, scale, repeatGap) {
       });
 
       scene.m_attackEvents[attackType] = {
-        timerLightning,
+        timer: timerLightning,
         damage,
         scale,
         repeatGap,
@@ -206,7 +206,7 @@ function doAttackOneSet(scene, attackType, damage, scale) {
 }
 
 export function removeAttack(scene, attackType) {
-  scene.time.removeEvent(scene.m_attackEvents[attackType]);
+  scene.time.removeEvent(scene.m_attackEvents[attackType].timer);
 }
 
 export function setAttackDamage(scene, attackType, newDamage) {
