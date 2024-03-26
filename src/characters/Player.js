@@ -15,7 +15,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.m_canBeAttacked = true;
     this.m_hpBar = new HpBar(scene, this, 100);
     this.setDepth(20);
-    this.setBodySize(40, 50);
+    this.setBodySize(30, 50);
   }
 
   move(vector) {
